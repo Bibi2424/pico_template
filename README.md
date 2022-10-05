@@ -1,6 +1,6 @@
 # Pico Template
 
-Simple project for the Pi Pico to serve as template.
+Simple project for the Pi Pico to serve as template. The application is actually the `blink` project from [pico-examples](https://github.com/raspberrypi/pico-examples).
 
 # Initial config
 
