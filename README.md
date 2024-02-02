@@ -38,3 +38,31 @@ ninja
 
 The uf2 file will be located in `build/src/PicoTemplate.uf2`.
 Simply copy this file to the RPi folder after connecting a usb cable to the Pi Pico while holding the BOOTSEL button.
+
+
+# PicoProbe
+
+Follow instructions to build openocd and install gdb(-multiarch). I can confirm that it works on WSL.
+
+To pass the usb from Windows to linux, use [usbipd](https://learn.microsoft.com/en-ca/windows/wsl/connect-usb#attach-a-usb-device).
+
+## Openocd
+
+```bash
+sudo src/openocd -f interface/cmsis-dap.cfg -c "adapter speed 5000" -f target/rp2040.cfg -s tcl
+```
+
+## GDB
+
+```bash
+gdb-multiarch src/<application-name>.elf
+```
+
+```gdb
+target remote localhost:3333
+load
+monitor reset init
+continue
+```
+
+Then use [gdb commands](https://darkdust.net/files/GDB%20Cheat%20Sheet.pdf)
