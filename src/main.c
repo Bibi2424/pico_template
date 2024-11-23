@@ -1,18 +1,11 @@
-/**
- * Copyright (c) 2020 Raspberry Pi (Trading) Ltd.
- *
- * SPDX-License-Identifier: BSD-3-Clause
- */
-
 #include <stdio.h>
+#include <stdint.h>
 #include "pico/stdlib.h"
+#include "pico/binary_info.h"
 #include "tusb.h"
 
-#include "dummy_lib.h"
+#include "pico_led.h"
 
-#ifndef PICO_DEFAULT_LED_PIN
-#warning blink example requires a board with a regular LED
-#endif
 
 #ifndef WAIT_FOR_USB
 #define WAIT_FOR_USB 1
@@ -21,9 +14,7 @@
 int main() {
     stdio_init_all();
 
-    const uint LED_PIN = PICO_DEFAULT_LED_PIN;
-    gpio_init(LED_PIN);
-    gpio_set_dir(LED_PIN, GPIO_OUT);
+    pico_led_init();
 
 #if WAIT_FOR_USB == 1
     while(tud_cdc_connected() == false) { sleep_ms(1); }
@@ -34,11 +25,10 @@ int main() {
 
     uint8_t a = 0;
     while (true) {
-        gpio_put(LED_PIN, 1);
+        pico_set_led(true);
         sleep_ms(250);
-        gpio_put(LED_PIN, 0);
+        pico_set_led(false);
         sleep_ms(250);
-        a = add(a, 1);
-        printf("Loop %hu\n", a);
+        printf("Loop %hu\n", ++a);
     }
 }

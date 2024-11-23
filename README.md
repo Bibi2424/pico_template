@@ -46,17 +46,48 @@ Follow instructions to build openocd and install gdb(-multiarch). I can confirm 
 
 To pass the usb from Windows to linux, use [usbipd](https://learn.microsoft.com/en-ca/windows/wsl/connect-usb#attach-a-usb-device).
 
+For openocd on windows: https://github.com/earlephilhower/pico-quick-toolchain/releases/tag/1.5.0-b
+For gdb-multiarch on windows: https://static.grumpycoder.net/pixel/gdb-multiarch-windows/
+
 ## Openocd
+
+### WSL:
 
 ```bash
 sudo src/openocd -f interface/cmsis-dap.cfg -c "adapter speed 5000" -f target/rp2040.cfg -s tcl
 ```
 
+### Windows
+
+From the root of the extracted openocd:
+
+__Start A debugging session__
+
+```bash
+./bin/openocd.exe -f ./share/openocd/scripts/interface/cmsis-dap.cfg -c "adapter speed 5000" -f ./share/openocd/scripts/target/rp2040.cfg
+```
+
+__Upload a program__
+
+```bash
+./bin/openocd.exe -f ./share/openocd/scripts/interface/cmsis-dap.cfg -c "adapter speed 5000" -f ./share/openocd/scripts/target/rp2040.cfg -c "program ${path_to_elf} verify reset exit"
+```
+
 ## GDB
+
+### WSL:
 
 ```bash
 gdb-multiarch src/<application-name>.elf
 ```
+
+### Windows
+
+```
+.\bin\gdb-multiarch.exe ${path_to_elf}
+```
+
+### loading the program
 
 ```gdb
 target remote localhost:3333

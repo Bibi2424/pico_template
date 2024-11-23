@@ -5,10 +5,13 @@ set(CMAKE_CXX_STANDARD 17)
 
 set(TARGET_GROUP production CACHE STRING "Group to build")
 
+# set(PICO_BOARD pico)
+set(PICO_BOARD pico_w)
+
 if(TARGET_GROUP STREQUAL production)
 	include(pico-sdk/pico_sdk_init.cmake)
 
-	project(MMAHD C CXX ASM)
+	project(PicoTemplate C CXX ASM)
 
 	# Initialize the SDK
 	pico_sdk_init()
